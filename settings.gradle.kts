@@ -1,2 +1,2 @@
 include("app")
-//rootProject.buildFileName = "build.gradle"
+rootProject.buildFileName = "build.gradle.kts"
