@@ -1,6 +1,5 @@
 package com.haku.kiana.plugin
 
-import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryPlugin
