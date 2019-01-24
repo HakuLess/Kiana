@@ -12,6 +12,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-android-extensions")
+    id("kiana")
 }
 
 android {
@@ -33,7 +34,6 @@ android {
     lintOptions {
         isAbortOnError = false
     }
-    registerTransform(TestTransForm())
 }
 
 

@@ -30,5 +30,5 @@ dependencies {
     implementation(kotlin("stdlib-jdk7", KotlinCompilerVersion.VERSION))
     implementation(gradleApi())
     implementation(localGroovy())
+    implementation("com.android.tools.build:gradle:3.1.4")
 }
-
