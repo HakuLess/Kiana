@@ -14,7 +14,8 @@ class HakuPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.task("HaKuPlugin") {
             println("test Plugin Success")
+        }.doLast {
+            println("doLast")
         }
-
     }
 }

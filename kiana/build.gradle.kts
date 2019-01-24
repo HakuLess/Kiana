@@ -4,7 +4,25 @@ plugins {
     id("java-library")
     id("java-gradle-plugin")
     id("kotlin")
+    id("maven-publish")
 }
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication::class.java) {
+            groupId = "com.haku.less"
+            artifactId = "kiana"
+            version = "0.0.1"
+
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven("/Users/HaKu/WorkSpace")
+    }
+}
+
 
 dependencies {
 
