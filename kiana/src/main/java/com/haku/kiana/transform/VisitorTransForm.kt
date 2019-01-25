@@ -1,10 +1,12 @@
 package com.haku.kiana.transform
 
+import com.android.build.api.transform.Format
 import com.android.build.api.transform.QualifiedContent
 import com.android.build.api.transform.Transform
 import com.android.build.api.transform.TransformInvocation
 import com.android.build.gradle.internal.pipeline.TransformManager
 import org.apache.commons.io.FileUtils
+import org.gradle.api.GradleException
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.Opcodes
@@ -43,19 +45,20 @@ class VisitorTransForm : Transform() {
     }
 
     override fun transform(transformInvocation: TransformInvocation?) {
-        super.transform(transformInvocation)
         if (transformInvocation == null) {
             return
         }
-        val input = transformInvocation.inputs
-        input.forEach {
 
-            val dirInputs = it.directoryInputs
-            val jarInputs = it.jarInputs
+        transformInvocation.inputs.forEach { input ->
+            input.directoryInputs.forEach { dirInput ->
+                doASMTest(dirInput.file.absolutePath)
 
-            dirInputs.forEach { dirInput ->
-                println("transform DirectoryInput:" + dirInput.file.absolutePath)
-//                doASMTest(dirInput.file.absolutePath)
+                val dest = transformInvocation.outputProvider.getContentLocation(
+                    dirInput.name,
+                    dirInput.contentTypes, dirInput.scopes,
+                    Format.DIRECTORY
+                )
+                FileUtils.copyDirectory(dirInput.file, dest)
             }
         }
     }
@@ -64,15 +67,13 @@ class VisitorTransForm : Transform() {
 
         val iter = FileUtils.iterateFiles(File(rootFolder), null, true)
         while (iter.hasNext()) {
-            println("ASM manipulate ${iter.next().name}")
 
-//            val file = iter.next()
-//            if (file.name == "MainActivity.class") {
-//
-//                //ASM
-//                println("ASM manipulate")
-//                processClass(file)
-//            }
+            val file = iter.next()
+            println("ASM manipulate ${file.name}")
+            if (file.name == "MainActivity.class") {
+                // ASM
+                processClass(file)
+            }
         }
     }
 
