@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.haku.kiana.hack.clickViewHack
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,10 +27,13 @@ class MainActivity : AppCompatActivity() {
 
     fun click(view: View) {
         clickView(view)
-//        this.clickViewHack(view)
 //        clickViewHack(view)
     }
 
+    fun clickView(view: View) {
+        Snackbar.make(view, "hack success 0000", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
+    }
 //    fun clickViewHack(view: View) {
 //        Snackbar.make(view, "hack success", Snackbar.LENGTH_LONG)
 //            .setAction("Action", null).show()
@@ -55,9 +59,4 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-}
-
-fun clickView(view: View) {
-    Snackbar.make(view, "hack success 0000", Snackbar.LENGTH_LONG)
-        .setAction("Action", null).show()
 }
