@@ -5,6 +5,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     val a = true
 
-    val c = 300000
+    private var c = 300000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +21,18 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "$c", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            clickView(view)
         }
+    }
+
+    fun clickViewHack(view: View) {
+        Snackbar.make(view, "hack success", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
+    }
+
+    fun clickView(view: View) {
+        Snackbar.make(view, "$c", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

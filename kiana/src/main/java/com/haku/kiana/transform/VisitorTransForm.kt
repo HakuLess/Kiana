@@ -69,9 +69,11 @@ class VisitorTransForm : Transform() {
         while (iter.hasNext()) {
 
             val file = iter.next()
-            println("ASM manipulate ${file.name}")
-            if (file.name == "MainActivity.class") {
+            println("Class List ${file.name}")
+
+            if (file.name != "R.class" && !file.name.startsWith("R$")) {
                 // ASM
+                println("ASM manipulate ${file.name}")
                 processClass(file)
             }
         }
