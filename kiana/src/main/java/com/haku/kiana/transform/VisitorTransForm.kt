@@ -4,9 +4,7 @@ import com.android.build.api.transform.Format
 import com.android.build.api.transform.QualifiedContent
 import com.android.build.api.transform.Transform
 import com.android.build.api.transform.TransformInvocation
-import com.android.build.gradle.internal.pipeline.TransformManager
 import org.apache.commons.io.FileUtils
-import org.gradle.api.GradleException
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.Opcodes
@@ -19,6 +17,11 @@ import java.io.*
  * Created by HaKu on 2019-01-24.
  */
 class VisitorTransForm : Transform() {
+
+    private val whiteList = arrayListOf(
+        "BuildConfig.class",
+        "app_debug.kotlin_module"
+    )
 
     override fun getName(): String {
         return "visitor"
@@ -63,15 +66,18 @@ class VisitorTransForm : Transform() {
         }
     }
 
+    /**
+     * 进行ASM修改字节码
+     * */
     private fun doASMTest(rootFolder: String) {
 
-        val iter = FileUtils.iterateFiles(File(rootFolder), null, true)
-        while (iter.hasNext()) {
+        val iterator = FileUtils.iterateFiles(File(rootFolder), null, true)
+        while (iterator.hasNext()) {
 
-            val file = iter.next()
-            println("Class List ${file.name}")
+            val file = iterator.next()
+//            println("Class List ${file.name}")
 
-            if (file.name != "R.class" && !file.name.startsWith("R$")) {
+            if (file.name != "R.class" && !file.name.startsWith("R$") && file.name !in whiteList) {
                 // ASM
                 println("ASM manipulate ${file.name}")
                 processClass(file)

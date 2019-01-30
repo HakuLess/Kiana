@@ -51,12 +51,12 @@ class HackMethodVisitor(private val methodName: String, mv: MethodVisitor) : Met
         println("$methodName Visit In: $opcode $owner $name $desc $itf")
         when (name) {
             "clickView" -> {
-                mv.visitMethodInsn(opcode, owner, name + "Hack", desc, itf)
+                mv.visitMethodInsn(opcode, "com/haku/kiana/hack/HackKt", name + "Hack", desc, false)
             }
-//            "clickViewHack" -> {
-//                methodList.add(MethodIns(opcode, owner, name, desc, itf))
-//                mv.visitMethodInsn(opcode, owner, name, desc, itf)
-//            }
+            "clickViewHack" -> {
+                methodList.add(MethodIns(opcode, owner, name, desc, itf))
+                mv.visitMethodInsn(opcode, owner, name, desc, itf)
+            }
             else -> {
                 mv.visitMethodInsn(opcode, owner, name, desc, itf)
             }
